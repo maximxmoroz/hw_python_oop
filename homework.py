@@ -38,7 +38,8 @@ class Calculator:
 class CashCalculator(Calculator):
     RUB_RATE = 1.0
     USD_RATE = 60.0
-    EURO_RATE = 70.0             
+    EURO_RATE = 70.0
+
     def get_today_cash_remained(self, hello=None):
         cash_result = self.get_today_stats()
         currency_dict = {'rub': (1.0, 'руб'),
@@ -62,6 +63,7 @@ class CaloriesCalculator(Calculator):
     def get_calories_remained(self):
         calories_result = self.limit - self.get_today_stats()
         if calories_result > 0:
-            return ('Сегодня можно съесть что-нибудь'
-                    f' еще, но с общей калорийностью не более {calories_result} кКал')
+            return ('Сегодня можно съесть'
+                    ' что-нибудь еще, но с общей калорийностью'
+                    f' не более {calories_result} кКал')
         return 'Хватит есть!'
