@@ -55,17 +55,3 @@ class CaloriesCalculator(Calculator):
             return ('Сегодня можно съесть что-нибудь ещё,'
                     f' но с общей калорийностью не более {calories_result} кКал')
         return 'Хватит есть!'
-
-
-cash_calculator = CashCalculator(1000)
-# дата в параметрах не указана,
-# так что по умолчанию к записи
-# должна автоматически добавиться сегодняшняя дата
-cash_calculator.add_record(Record(amount=145, comment='кофе'))
-# и к этой записи тоже дата должна добавиться автоматически
-cash_calculator.add_record(Record(amount=300, comment='Серёге за обед'))
-# а тут пользователь указал дату, сохраняем её
-cash_calculator.add_record(Record(amount=3000,
-                                  comment='бар в Танин др',
-                                  date='08.11.2019'))
-print(cash_calculator.get_today_cash_remained('rub'))
