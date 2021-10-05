@@ -2,7 +2,7 @@ import datetime as dt
 FORMAT = '%d.%m.%Y'
 
 class Record: 
-    def __init__(self, amount, comment, date = None):
+    def __init__(self, amount, comment, date=None):
         self.amount = amount 
         self.comment = comment
         if date is None:
