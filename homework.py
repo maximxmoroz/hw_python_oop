@@ -32,31 +32,30 @@ class Calculator:
         past_week = now - dt.timedelta(7)
         week_result = sum(record.amount for record in self.records
                           if past_week <= record.date <= now)
-        return week_result   
+        return week_result
 
 
 class CashCalculator(Calculator):
-     RUB_RATE = 1.0
-     USD_RATE = 60.0
-     EURO_RATE = 70.0
+    RUB_RATE = 1.0
+    USD_RATE = 60.0
+    EURO_RATE = 70.0
                   
-     def get_today_cash_remained(self, hello=None):
-          cash_result = self.get_today_stats()
-          currency_dict = {'rub': (1.0, 'руб'),
-                           'usd': (self.USD_RATE, 'USD'),
-                           'eur': (self.EURO_RATE, 'Euro'),
-          }
-          abbr, coin = currency_dict[hello]
-          fiat = round((self.limit-cash_result)/abbr,2)
-          if cash_result < self.limit:
-               output = f'На сегодня осталось {fiat} {coin}'
-          elif cash_result == self.limit: 
-               output = 'Денег нет, держись'
-          else:
-               if fiat < 0:
-                    cash = abs(fiat)
-                    output = f'Денег нет, держись: твой долг - {cash} {coin}'     
-          return output            
+    def get_today_cash_remained(self, hello=None):
+        cash_result = self.get_today_stats()
+        currency_dict = {'rub': (1.0, 'руб'),
+                         'usd': (self.USD_RATE, 'USD'),
+                         'eur': (self.EURO_RATE, 'Euro')}
+        abbr, coin = currency_dict[hello]
+        fiat = round((self.limit-cash_result)/abbr,2)
+        if cash_result < self.limit:
+            output = f'На сегодня осталось {fiat} {coin}'
+        elif cash_result == self.limit: 
+            output = 'Денег нет, держись'
+        else:
+            if fiat < 0:
+                cash = abs(fiat)
+                output = f'Денег нет, держись: твой долг - {cash} {coin}'     
+        return output            
 
 class CaloriesCalculator(Calculator):
 
