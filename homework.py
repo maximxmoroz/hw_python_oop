@@ -1,6 +1,7 @@
 import datetime as dt
 FORMAT = '%d.%m.%Y'
 
+
 class Record:
     def __init__(self, amount, comment, date=None):
         self.amount = amount
@@ -9,6 +10,7 @@ class Record:
             self.date = dt.datetime.now().date()
         else:
             self.date = dt.datetime.strptime(date, FORMAT).date()
+
 
 class Calculator:
     def __init__(self, limit):
@@ -31,6 +33,7 @@ class Calculator:
         week_result = sum(record.amount for record in self.records
                           if past_week <= record.date <= now)
         return week_result   
+
 
 class CashCalculator(Calculator):
      RUB_RATE = 1.0
