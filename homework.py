@@ -1,6 +1,6 @@
 """импорт библиотек времени/аннотаций и определение формата"""
 
-from typing import Optional, List
+from typing import Optional
 import datetime as dt
 FORMAT = '%d.%m.%Y'
 
@@ -44,10 +44,10 @@ class Calculator:
 
         now = dt.date.today()
         return sum([record.amount for record in self.records
-                     if record.date == now])
+                    if record.date == now])
 
     def get_week_stats(self) -> float:
-        """сколько денег/калорий потрачено 
+        """сколько денег/калорий потрачено
         за последние 7 дней.
         """
 
@@ -55,7 +55,7 @@ class Calculator:
         for record in self.records:
             if self.past_week <= record.date <= self.now:
                 week_stats.append(record.amount)
-        return sum(week_stats)       
+        return sum(week_stats)
 
     def today_remain(self):
         """создали метод для подсчета остатка на сегодня"""
