@@ -1,6 +1,6 @@
 """импорт библиотек времени/аннотаций и определение формата"""
 
-from typing import Counter, Optional
+from typing import Optional
 import datetime as dt
 FORMAT = '%d.%m.%Y'
 
@@ -43,7 +43,7 @@ class Calculator:
         """
 
         return sum(record.amount for record in self.records
-                    if record.date == self.now)
+                   if record.date == self.now)
 
     def get_week_stats(self) -> float:
         """сколько денег/калорий потрачено
@@ -51,7 +51,7 @@ class Calculator:
         """
 
         return sum(record.amount for record in self.records
-                    if self.past_week < record.date <= self.now)
+                   if self.past_week < record.date <= self.now)
 
     def today_remain(self):
         """создали метод для подсчета остатка на сегодня"""
@@ -73,11 +73,11 @@ class CashCalculator(Calculator):
         currency_dict = {'rub': (1.0, 'руб'),
                          'usd': (self.USD_RATE, 'USD'),
                          'eur': (self.EURO_RATE, 'Euro')}
-        cash_result = self.today_remain()   
+        cash_result = self.today_remain()
         if cash_result == 0:
-            return 'Денег нет, держись' 
+            return 'Денег нет, держись'
         if hello not in currency_dict:
-            return f'Такой валюты нет'    
+            return 'Такой валюты нет'
         abbr, coin = currency_dict[hello]
         cash_result = round(cash_result / abbr, 2)
         if cash_result > 0:
