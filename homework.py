@@ -1,6 +1,6 @@
 """импорт библиотек времени/аннотаций и определение формата"""
 
-from typing import Optional
+from typing import Counter, Optional
 import datetime as dt
 FORMAT = '%d.%m.%Y'
 
@@ -42,20 +42,16 @@ class Calculator:
         сколько калорий съедено сегодня.
         """
 
-        now = dt.date.today()
-        return sum([record.amount for record in self.records
-                    if record.date == now])
+        return sum(record.amount for record in self.records
+                    if record.date == self.now)
 
     def get_week_stats(self) -> float:
         """сколько денег/калорий потрачено
         за последние 7 дней.
         """
 
-        week_stats = []
-        for record in self.records:
-            if self.past_week <= record.date <= self.now:
-                week_stats.append(record.amount)
-        return sum(week_stats)
+        return sum(record.amount for record in self.records
+                    if self.past_week < record.date <= self.now)
 
     def today_remain(self):
         """создали метод для подсчета остатка на сегодня"""
@@ -74,19 +70,21 @@ class CashCalculator(Calculator):
     EURO_RATE = 70.0
 
     def get_today_cash_remained(self, hello: str) -> str:
-        cash_result = self.get_today_stats()
         currency_dict = {'rub': (1.0, 'руб'),
                          'usd': (self.USD_RATE, 'USD'),
                          'eur': (self.EURO_RATE, 'Euro')}
+        cash_result = self.today_remain()   
+        if cash_result == 0:
+            return 'Денег нет, держись' 
+        if hello not in currency_dict:
+            return f'Такой валюты нет'    
         abbr, coin = currency_dict[hello]
-        fiat = round((self.limit - cash_result) / abbr, 2)
-        if cash_result == self.limit:
-            output = 'Денег нет, держись'
-        elif cash_result < self.limit:
-            output = f'На сегодня осталось {fiat} {coin}'
+        cash_result = round(cash_result / abbr, 2)
+        if cash_result > 0:
+            output = f'На сегодня осталось {cash_result} {coin}'
         else:
-            if fiat < 0:
-                cash = abs(fiat)
+            if cash_result < 0:
+                cash = abs(cash_result)
                 output = f'Денег нет, держись: твой долг - {cash} {coin}'
         return output
 
